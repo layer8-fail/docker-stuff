@@ -1,0 +1,24 @@
+version: '2'
+services:
+  app:
+    container_name: gitea-app
+    restart: always
+    image: gitea/gitea:latest
+    volumes:
+      - /data/gitea:/data
+    ports:
+      - "2222:22"
+    environment:
+      - VIRTUAL_PORT=3000
+      - VIRTUAL_HOST=git.layer8.fail
+    networks:
+      - frontend
+    labels:
+      - "traefik.docker.network=frontend"
+      - "traefik.backend=gitea"
+      - "traefik.frontend.rule=Host:git.layer8.fail"
+      - "traefik.enable=true"
+      - "traefik.frontend.entryPoints=http,https"
+      - "traefik.port=3000"
+networks:
+  frontend:

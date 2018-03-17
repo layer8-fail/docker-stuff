@@ -1,0 +1,21 @@
+version: "2.1"
+
+services:
+  reposerver:
+    image: reposerver:latest
+    restart: always
+    networks:
+      - web
+    expose:
+      - "9090"
+    labels:
+      - "traefik.docker.network=web"
+      - "traefik.backend=archmirror"
+      - "traefik.frontend.rule=Host:archlinux.layer8.fail"
+      - "traefik.enable=true"
+      - "traefik.frontend.entryPoints=http,https"
+    volumes:
+       - /data/archmirror:/wwwroot:ro
+networks:
+  web:
+    external: true
