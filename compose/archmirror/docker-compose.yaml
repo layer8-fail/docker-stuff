@@ -2,6 +2,7 @@ version: "2.1"
 
 services:
   reposerver:
+    container_name: archlinux_mirror
     image: reposerver:latest
     restart: always
     networks:
