@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+  netdata:
+    container_name: netdata
+    image: firehol/netdata:alpine
+    restart: always
+    networks:
+      - monitoring
+    cap_add:
+      - SYS_PTRACE
+    expose:
+      - "9090"
+    labels:
+      - "traefik.docker.network=monitoring"
+      - "traefik.backend=netdata"
+      - "traefik.frontend.rule=Host:netdata.layer8.fail"
+      - "traefik.enable=false"
+      - "traefik.frontend.entryPoints=http,https"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+networks:
+  monitoring:
+    external: true
