@@ -1,16 +1,14 @@
-version: "3"
+version: "2"
 
 services:
   netdata:
     container_name: netdata
     image: firehol/netdata:alpine
     restart: always
-    networks:
-      - monitoring
     cap_add:
       - SYS_PTRACE
-    expose:
-      - "9090"
+    ports:
+      - "127.0.0.1:19999:19999"
     labels:
       - "traefik.docker.network=monitoring"
       - "traefik.backend=netdata"
@@ -21,6 +19,3 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro
-networks:
-  monitoring:
-    external: true
