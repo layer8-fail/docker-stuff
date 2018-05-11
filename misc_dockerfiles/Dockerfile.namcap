@@ -1,0 +1,6 @@
+FROM archimg/base-devel
+LABEL maintainer Mattias Giese <mattiasgiese@posteo.net>
+
+RUN pacman -Sy --noconfirm --noprogressbar namcap
+
+ENTRYPOINT ["/usr/bin/namcap"]
