@@ -1,0 +1,21 @@
+version: '2'
+services:
+  synapse:
+    container_name: synapse
+    restart: always
+    image: matrixdotorg/synapse:v0.30.0
+    volumes:
+      - /data/synapse:/data
+    ports:
+      - "8448:8448"
+    networks:
+      - frontend
+    labels:
+      - "traefik.docker.network=frontend"
+      - "traefik.backend=synapse"
+      - "traefik.frontend.rule=Host:synapse.layer8.fail"
+      - "traefik.enable=true"
+      - "traefik.frontend.entryPoints=http,https"
+      - "traefik.port=8008"
+networks:
+  frontend:
