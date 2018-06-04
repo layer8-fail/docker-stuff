@@ -2,7 +2,7 @@ version: '2'
 services:
   synapse:
     container_name: synapse
-    restart: always
+    restart: unless-stopped
     image: matrixdotorg/synapse:v0.30.0
     volumes:
       - /data/synapse:/data
@@ -10,6 +10,9 @@ services:
       - "8448:8448"
     environment:
       - "SYNAPSE_SERVER_NAME=synapse.layer8.fail"
+      - "SYNAPSE_REPORT_STATS=no"
+      - "SYNAPSE_ENABLE_REGISTRATION=yes"
+      - "SYNAPSE_LOG_LEVEL=INFO"
     networks:
       - frontend
     labels:
