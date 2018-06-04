@@ -8,7 +8,8 @@ services:
       - /data/synapse:/data
     ports:
       - "8448:8448"
-      - "8008"
+    environment:
+      - "SYNAPSE_SERVER_NAME=synapse.layer8.fail"
     networks:
       - frontend
     labels:
